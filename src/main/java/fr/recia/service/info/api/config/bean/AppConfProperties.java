@@ -31,6 +31,14 @@ public class AppConfProperties {
 
     @NotNull
     private String jsonFolder;
+    @NotNull
+    private String casServiceId;
+    @NotNull
+    private String casServerUrl;
+    @NotNull
+    private String casProviderKey;
+    @NotNull
+    private String casTicketCallback;
 
     @PostConstruct
     public void setupAndDebug() {

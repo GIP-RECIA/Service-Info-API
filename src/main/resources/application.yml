@@ -24,6 +24,10 @@ server:
 app:
   conf:
     jsonFolder: "/tmp"
+    casServiceId: "http://localhost:8080/service-info-api/login/cas"
+    casServerUrl: "https://localhost:8443/cas"
+    casProviderKey: "casProviderKey"
+    casTicketCallback: "/login/cas"
 
 spring:
   profiles:
