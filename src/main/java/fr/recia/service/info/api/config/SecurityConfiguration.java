@@ -15,6 +15,7 @@
  */
 package fr.recia.service.info.api.config;
 
+import fr.recia.service.info.api.config.bean.ApiEndpoints;
 import fr.recia.service.info.api.web.rest.HealthCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +37,11 @@ public class SecurityConfiguration {
 				.and().authorizeHttpRequests(
 						authorizeHttpRequests -> authorizeHttpRequests
 							.antMatchers(HealthCheck.HEALTH_CHECK).permitAll()
-							.antMatchers("/api/serviceInfo/*").permitAll()
+							.antMatchers("/api/"+ApiEndpoints.READ_SERVICE_INFO+"/*").permitAll()
+							.antMatchers("/"+ApiEndpoints.CREATE_SERVICE_INFO).permitAll()
+							.antMatchers("/api/"+ApiEndpoints.GENERATE_JSON_FILE).permitAll()
+							.antMatchers("/*.js").permitAll()
+							.antMatchers("/*.css").permitAll()
 							.anyRequest().denyAll())
 				.httpBasic(Customizer.withDefaults()).sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		return http.build();

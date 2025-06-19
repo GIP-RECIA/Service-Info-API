@@ -13,28 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.recia.service.info.api.dto;
+package fr.recia.service.info.api.config.bean;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-import lombok.Data;
-
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.List;
-
-@Data
-public class ServiceInfoDto implements Serializable {
-
-    @NotNull
-    private String description;
-    @NotNull
-    private String video_link;
-    private String categorie_principale;
-    private List<TutorialDto> tutorials;
-    private List<String> populations_cible;
-    private List<String> contextes_cible;
-    @JsonSetter(nulls = Nulls.SKIP)
-    private boolean gere_par_etablissement = false;
-
+public enum TargetPopulation {
+    ELEVES,
+    PARENTS,
+    ENSEIGNANTS
 }

@@ -15,28 +15,32 @@
  */
 package fr.recia.service.info.api.config.bean;
 
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
-
-import javax.annotation.PostConstruct;
-import javax.validation.constraints.NotBlank;
-
-@ConfigurationProperties(prefix = "app.info")
-@Validated
-@Data
-@Slf4j
-public class AppInfosProperties {
-
-	@NotBlank
-	private String name;
-	@NotBlank
-	private String version;
-
-	@PostConstruct
-	public void debug() {
-		log.debug("App Info {}", this);
-	}
-
+public enum Fnames {
+    RessourcesDiffusables,
+    Ypareo,
+    WiseMapping,
+    ESUPpod,
+    MyPads,
+    Wims,
+    edumalin,
+    ELEA,
+    pix,
+    Nextcloud,
+    CollabSoft,
+    pearltrees,
+    VieScolaire,
+    Mediacentre,
+    Teleservices,
+    CAPYTALE,
+    MenuCantine,
+    Corely,
+    YEPS,
+    VisioBBB,
+    Filemanager,
+    ParamUserEtab,
+    GLC,
+    PDFOnline,
+    CourrielAcademique,
 }
+
+

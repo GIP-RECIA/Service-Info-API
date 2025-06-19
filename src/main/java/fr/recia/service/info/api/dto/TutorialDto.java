@@ -15,14 +15,18 @@
  */
 package fr.recia.service.info.api.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TutorialDto implements Serializable {
 
-    private String title;
-    private String link;
+    private String name;
+    private String href;
 
 }

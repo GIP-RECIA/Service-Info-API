@@ -16,5 +16,7 @@
 package fr.recia.service.info.api.config.bean;
 
 public final class ApiEndpoints {
-        public static final String SERVICE_INFO = "serviceInfo";
+    public static final String READ_SERVICE_INFO = "serviceInfo";
+    public static final String CREATE_SERVICE_INFO = "create";
+    public static final String GENERATE_JSON_FILE = "generateFile";
 }

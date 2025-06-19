@@ -32,6 +32,9 @@ spring:
     cache-names: service-info
     caffeine:
       spec: maximumSize=1000,expireAfterWrite=1h
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
 
 management:
   endpoints:
