@@ -16,17 +16,19 @@
 package fr.recia.service.info.api.web.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.recia.service.info.api.config.bean.ApiEndpoints;
+import fr.recia.service.info.api.dto.JsonFileRequestDto;
 import fr.recia.service.info.api.dto.ServiceInfoDto;
-import fr.recia.service.info.api.dto.TutorialDto;
+import fr.recia.service.info.api.service.CategoryMappingLoaderService;
 import fr.recia.service.info.api.service.impl.ServiceInfoAPIService;
+import fr.recia.service.info.api.service.impl.ServiceInfoCreateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +37,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -45,6 +46,9 @@ public class ServiceInfoAPIResource {
 
 	@Autowired
 	private ServiceInfoAPIService serviceInfoAPIService;
+
+	@Autowired
+	private ServiceInfoCreateService serviceInfoCreateService;
 
 	@RequestMapping(value = "/" + ApiEndpoints.READ_SERVICE_INFO + "/{fname}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ServiceInfoDto> getServiceInfo(@PathVariable String fname, HttpServletResponse response) {
@@ -64,49 +68,43 @@ public class ServiceInfoAPIResource {
 	@ResponseBody
 	public ResponseEntity<String> generateJsonFileFromForm(
 			@RequestParam String fname,
-			@RequestParam String link,
+			@RequestParam String video_link,
 			@RequestParam String category,
 			@RequestParam(required = false) List<String> population,
 			@RequestParam(required = false) List<String> contexte,
 			@RequestParam(required = false) List<String> name,
 			@RequestParam(required = false) List<String> href,
-			@RequestParam(required = false) boolean gereParEtablissement,
+			@RequestParam(required = false) String resource_link,
+			@RequestParam(required = false) String responsable,
 			@RequestParam String description) {
 
-		// Exemple de log ou traitement
-		System.out.println("Fname: " + fname);
-		System.out.println("Link: " + link);
-		System.out.println("Category: " + category);
-		System.out.println("Population: " + population);
-		System.out.println("Contexte: " + contexte);
-		System.out.println("Description: " + description);
-		System.out.println("Titre: " + name);
-		System.out.println("Url: " + href);
-		System.out.println("gereParEtablissement: " + gereParEtablissement);
+		log.debug("Fname: " + fname);
+		log.debug("Video link: " + video_link);
+		log.debug("Category: " + category);
+		log.debug("Population: " + population);
+		log.debug("Contexte: " + contexte);
+		log.debug("Titre: " + name);
+		log.debug("Url: " + href);
+		log.debug("Url: " + href);
+		log.debug("Tutorial link: " + resource_link);
+		log.debug("Description: " + description);
 
-		List<TutorialDto> tutorialDtos = new ArrayList<>();
-		if(name != null){
-			for(int i=0; i< name.size(); i++){
-				tutorialDtos.add(new TutorialDto(name.get(i), href.get(i)));
-			}
-		}
-
-		ServiceInfoDto dto = new ServiceInfoDto();
-		dto.setVideo_link(link);
-		dto.setCategorie_principale(category);
-		dto.setDescription(description);
-		dto.setContextes_cible(contexte);
-		dto.setPopulations_cible(population);
-		dto.setTutorials(tutorialDtos);
-		dto.setGere_par_etablissement(gereParEtablissement);
-
-		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			String json = objectMapper.writeValueAsString(dto);
-			return ResponseEntity.ok(json);
+			return ResponseEntity.ok(serviceInfoCreateService.createJsonString(fname, video_link, category, population,
+					contexte, name, href, resource_link, responsable, description));
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
+
+	}
+
+	@RequestMapping(value = ApiEndpoints.SAVE_JSON_FILE, method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> saveJsonFile(@RequestBody JsonFileRequestDto jsonFileRequestDto) {
+		log.debug("Fname: " + jsonFileRequestDto.getFname());
+		log.debug("Json: " + jsonFileRequestDto.getJson());
+		boolean success = serviceInfoCreateService.saveJsonFile(jsonFileRequestDto.getFname(), jsonFileRequestDto.getJson());
+		return ResponseEntity.ok("");
 	}
 
 }

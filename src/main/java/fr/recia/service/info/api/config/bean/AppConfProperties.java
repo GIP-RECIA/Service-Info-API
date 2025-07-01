@@ -32,6 +32,8 @@ public class AppConfProperties {
     @NotNull
     private String jsonFolder;
     @NotNull
+    private String draftJsonFolder;
+    @NotNull
     private String casServiceId;
     @NotNull
     private String casServerUrl;

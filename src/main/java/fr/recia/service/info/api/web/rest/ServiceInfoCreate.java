@@ -18,6 +18,7 @@ package fr.recia.service.info.api.web.rest;
 import fr.recia.service.info.api.config.bean.ApiEndpoints;
 import fr.recia.service.info.api.config.bean.Categories;
 import fr.recia.service.info.api.config.bean.Fnames;
+import fr.recia.service.info.api.config.bean.Responsables;
 import fr.recia.service.info.api.config.bean.TargetContext;
 import fr.recia.service.info.api.config.bean.TargetPopulation;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +35,10 @@ public class ServiceInfoCreate {
 	@RequestMapping(value = ApiEndpoints.CREATE_SERVICE_INFO, method = RequestMethod.GET)
 	public String createServiceInfo(Model model) {
 		model.addAttribute("fnameOptions", Fnames.values());
-		model.addAttribute("populations", TargetPopulation.values());
-		model.addAttribute("contexts", TargetContext.values());
+		model.addAttribute("populations", TargetPopulation.getStringValues());
+		model.addAttribute("contexts", TargetContext.getStringValues());
 		model.addAttribute("categories", Categories.getStringValues());
+		model.addAttribute("responsables", Responsables.getStringValues());
 		return "index";
 	}
 

@@ -32,9 +32,9 @@ public class ServiceInfoDto implements Serializable {
     private String video_link;
     private String categorie_principale;
     private List<TutorialDto> tutorials;
+    private String resource_link;
     private List<String> populations_cible;
     private List<String> contextes_cible;
-    @JsonSetter(nulls = Nulls.SKIP)
-    private boolean gere_par_etablissement = false;
+    private String responsable;
 
 }

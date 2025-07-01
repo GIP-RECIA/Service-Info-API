@@ -15,8 +15,27 @@
  */
 package fr.recia.service.info.api.config.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum TargetPopulation {
-    ELEVES,
-    PARENTS,
-    ENSEIGNANTS
+
+    eleves("Elèves"),
+    parents("Parents"),
+    enseignants("Enseignants");
+
+    public final String population;
+
+    TargetPopulation(String population) {
+        this.population = population;
+    }
+
+    public static List<String> getStringValues(){
+        List<String> populationValues = new ArrayList<>();
+        for(TargetPopulation p : TargetPopulation.values()){
+            populationValues.add(p.population);
+        }
+        return populationValues;
+    }
+
 }

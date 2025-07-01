@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.recia.service.info.api.config.bean;
+package fr.recia.service.info.api.service.impl;
 
-public final class ApiEndpoints {
-    public static final String READ_SERVICE_INFO = "serviceInfo";
-    public static final String CREATE_SERVICE_INFO = "create";
-    public static final String GENERATE_JSON_FILE = "generateFile";
-    public static final String SAVE_JSON_FILE = "saveFile";
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.util.List;
+
+public interface ServiceInfoCreateService {
+    String createJsonString(final String fname, final String video_link, final String category, final List<String> population,
+                            final List<String> contexte, final List<String> name, final List<String> href, String resource_link,
+                            final String responsable, final String description) throws JsonProcessingException;
+    boolean saveJsonFile(final String fname, final String json);
 }

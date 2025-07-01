@@ -4,7 +4,7 @@ const quill = new Quill('#editor', {
     modules: {
         toolbar: [
             ['bold', 'italic', 'underline', 'link'],
-            [],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             ['clean']
         ]
     }
@@ -25,6 +25,7 @@ function ajouterTuto() {
     `;
     container.appendChild(div);
     addEventToTuto();
+    majDroite();
 }
 
 // Suppression du dernier tuto
@@ -101,7 +102,10 @@ function appelerApiEtRemplir() {
     })
     .then(data => {
         // Lien vidéo
-        document.getElementById('link').value = data.video_link || '';
+        document.getElementById('video_link').value = data.video_link || '';
+
+        // Lien turoriel
+        document.getElementById('resource_link').value = data.resource_link || '';
 
         // Populations cible
         if(data.populations_cible) {
@@ -119,13 +123,13 @@ function appelerApiEtRemplir() {
             });
         }
 
-        // Géré par établissement
-        const checkbox = document.querySelector(`input[name="gereParEtablissement"]`);
-        checkbox.checked = data.gere_par_etablissement;
-
         // Catégorie
         const category = document.getElementById("category");
         category.value = data.categorie_principale;
+
+        // Responsable
+        const responsable = document.getElementById("responsable");
+        responsable.value = data.responsable;
 
         // Description
         quill.clipboard.dangerouslyPasteHTML(data.description);
@@ -154,28 +158,49 @@ function appelerApiEtRemplir() {
 
 // Remplissage de la prévisualisation (composant web) à partir des champs gauche
 function majDroite() {
-if(stopUpdate==0){
-    const formData = new FormData(document.getElementById("createJsonForm"));
-    formData.set('fname', document.getElementById('fname').value)
-    formData.set('description', quill.root.innerHTML);
-    fetch('/service-info-api/api/generateFile', {
+    if(stopUpdate==0){
+        const formData = new FormData(document.getElementById("createJsonForm"));
+        formData.set('fname', document.getElementById('fname').value)
+        formData.set('description', quill.root.innerHTML);
+        fetch('/service-info-api/api/generateFile', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            const layout = document.querySelector('r-service-info-layout');
+            console.log(data)
+            layout.setAttribute('name', document.getElementById('fname').value);
+            layout.setAttribute('description', data.description);
+            layout.setAttribute('video', data.video_link)
+            layout.setAttribute('category', data.categorie_principale)
+            if(data.resource_link != ""){
+                layout.setAttribute('tutorials-link', JSON.stringify({ "href": data.resource_link }))
+            } else {
+                layout.setAttribute('tutorials-link', "")
+            }
+            layout.setAttribute('tutorials', JSON.stringify(data.tutorials));
+            document.getElementById('resultat').innerHTML = JSON.stringify(data);
+        })
+        .catch(error => {
+            console.error('Erreur lors de l’envoi :', error);
+        });
+    }
+}
+
+// Sauvegarde d'un fichier JSON en brouillon
+function saveJsonFile() {
+    fetch('/service-info-api/api/saveFile', {
         method: 'POST',
-        body: formData
+        headers: {'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            fname: document.getElementById('fname').value,
+            json: document.getElementById('resultat').innerHTML
+        })
     })
     .then(response => response.json())
-    .then(data => {
-        const layout = document.querySelector('r-service-info-layout');
-        console.log(data)
-        layout.setAttribute('name', document.getElementById('fname').value);
-        layout.setAttribute('description', data.description);
-        layout.setAttribute('video', data.video_link)
-        layout.setAttribute('category', data.categorie_principale)
-        layout.setAttribute('tutorials', JSON.stringify(data.tutorials));
-        document.getElementById('resultat').innerHTML = JSON.stringify(data);
-    })
     .catch(error => {
         console.error('Erreur lors de l’envoi :', error);
     });
-}
 
 }

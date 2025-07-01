@@ -18,26 +18,22 @@ package fr.recia.service.info.api.config.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum TargetContext {
+public enum Responsables {
 
-    lycees_educ_nat("Lycées éducation nationale"),
-    lycees_educ_agri("Lycées éducation agricole"),
-    colleges("Collèges"),
-    cfa("CFA"),
-    ef2s("Formation sanitaire et sociale"),
-    collectivites("Collectivités");
+    rectorat("Rectorat"),
+    ent("ENT");
 
-    public final String context;
+    public final String responsable;
 
-    TargetContext(String context) {
-        this.context = context;
+    Responsables(String responsable) {
+        this.responsable = responsable;
     }
 
     public static List<String> getStringValues(){
-        List<String> contextValues = new ArrayList<>();
-        for(TargetContext t : TargetContext.values()){
-            contextValues.add(t.context);
+        List<String> responsablesValues = new ArrayList<>();
+        for(Responsables r : Responsables.values()){
+            responsablesValues.add(r.responsable);
         }
-        return contextValues;
+        return responsablesValues;
     }
 }

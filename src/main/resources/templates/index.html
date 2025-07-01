@@ -22,8 +22,8 @@
 
             <form id="createJsonForm">
 
-                <label for="link">Lien de la vidéo :</label>
-                <input type="text" id="link" name="link">
+                <label for="video_link">Premiers pas avec le service :</label>
+                <input type="text" id="video_link" name="video_link">
 
                 <br><br>
 
@@ -38,16 +38,19 @@
 
                 <br>
 
-                <p>Tutoriels :</p>
-                <button type="button" onclick="ajouterTuto()">Ajouter un tutoriel</button>
-                <button type="button" onclick="enleverDernierTuto()">Enlever le dernier tutoriel</button>
+                <p>Ressources :</p>
+                <button type="button" onclick="ajouterTuto()">Ajouter une ressource</button>
+                <button type="button" onclick="enleverDernierTuto()">Enlever la dernière ressource</button>
                 <br><br>
                 <div id="liens-container">
                 </div>
 
+                <label for="resource_link">Lien vers toutes les ressources :</label>
+                <input type="text" id="resource_link" name="resource_link">
+
                 <br>
 
-                <p>Population cible :</p>
+                <p>Populations cible :</p>
                 <div th:each="pop : ${populations}">
                     <input type="checkbox" th:id="${'population_' + pop}" th:name="population" th:value="${pop}">
                     <label th:for="${'population_' + pop}" th:text="${pop}"></label><br>
@@ -55,7 +58,7 @@
 
                 <br>
 
-                <p>Contexte cible :</p>
+                <p>Contextes cible :</p>
                 <div th:each="ctx : ${contexts}">
                     <input type="checkbox" th:id="${'contexte_' + ctx}" th:name="contexte" th:value="${ctx}">
                     <label th:for="${'contexte_' + ctx}" th:text="${ctx}"></label><br>
@@ -63,14 +66,19 @@
 
                 <br>
 
-                <label>
-                    <input type="checkbox" name="gereParEtablissement" value="true">
-                    Géré par établissement ?
-                </label>
+                <label for="responsable">Responsable :</label>
+                <select id="responsable" name="responsable">
+                    <option value="" text=""></option>
+                    <option th:each="option : ${responsables}"
+                            th:value="${option}"
+                            th:text="${option}">
+                    </option>
+                </select>
 
                 <br><br>
 
                 <label for="description">Description :</label>
+                <br><br>
                 <div id="editor"></div>
                 <!-- Champ caché pour envoyer le contenu -->
                 <input type="hidden" name="description" id="description">
@@ -80,9 +88,14 @@
             <hr class="separateur">
 
             <div class="result">
-                <p>Contenu du fichier JSON :</p>
+                <p>Résultat du fichier JSON (lecture seule) :</p>
                 <textarea id="resultat" readonly></textarea>
             </div>
+
+            <br>
+
+            <button onclick="saveJsonFile()">Sauvegarder le brouillon</button>
+            <button onclick="">Pousser en production</button>
 
         </div>
 
@@ -93,16 +106,12 @@
                         icon-url=""
                         name=""
                         origin="external"
-                        category="apprentissage"
+                        category=""
                         description=''
                         video=""
                         tutorials='[]'
-                        tutorials-link='{
-                            "href": "#"
-                          }'
-                        launch-link='{
-                            "href": "#"
-                          }'
+                        tutorials-link=""
+                        launch-link='{"href": "#"}'
                 >
                 </r-service-info-layout>
             </div>
