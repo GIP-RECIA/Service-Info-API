@@ -38,6 +38,14 @@ body {
   width: 60%;
 }
 
+#resource_title{
+    display:flex;
+    align-items: center;
+}
+#resource_title button {
+  height: fit-content;
+}
+
 .separateur {
   border: none;
   height: 2px;

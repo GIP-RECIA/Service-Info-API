@@ -6,4 +6,5 @@ import lombok.Data;
 public class JsonFileRequestDto {
     private String fname;
     private String json;
+    private boolean draft;
 }

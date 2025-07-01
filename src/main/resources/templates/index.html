@@ -38,12 +38,13 @@
 
                 <br>
 
-                <p>Ressources :</p>
-                <button type="button" onclick="ajouterTuto()">Ajouter une ressource</button>
-                <button type="button" onclick="enleverDernierTuto()">Enlever la dernière ressource</button>
-                <br><br>
+                <div id="resource_title">
+                    <p>Ressources : </p>
+                    <button type="button" onclick="ajouterTuto()">Ajouter une ressource</button>
+                </div>
                 <div id="liens-container">
                 </div>
+                <br>
 
                 <label for="resource_link">Lien vers toutes les ressources :</label>
                 <input type="text" id="resource_link" name="resource_link">
@@ -80,7 +81,6 @@
                 <label for="description">Description :</label>
                 <br><br>
                 <div id="editor"></div>
-                <!-- Champ caché pour envoyer le contenu -->
                 <input type="hidden" name="description" id="description">
 
             </form>
@@ -94,8 +94,8 @@
 
             <br>
 
-            <button onclick="saveJsonFile()">Sauvegarder le brouillon</button>
-            <button onclick="">Pousser en production</button>
+            <button onclick="saveJsonFile(true)">Sauvegarder le brouillon</button>
+            <button onclick="saveJsonFile(false)">Pousser en production</button>
 
         </div>
 

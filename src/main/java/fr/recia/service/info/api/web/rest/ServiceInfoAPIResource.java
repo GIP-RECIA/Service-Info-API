@@ -103,7 +103,8 @@ public class ServiceInfoAPIResource {
 	public ResponseEntity<String> saveJsonFile(@RequestBody JsonFileRequestDto jsonFileRequestDto) {
 		log.debug("Fname: " + jsonFileRequestDto.getFname());
 		log.debug("Json: " + jsonFileRequestDto.getJson());
-		boolean success = serviceInfoCreateService.saveJsonFile(jsonFileRequestDto.getFname(), jsonFileRequestDto.getJson());
+		log.debug("Draft: " + jsonFileRequestDto.isDraft());
+		boolean success = serviceInfoCreateService.saveJsonFile(jsonFileRequestDto.getFname(), jsonFileRequestDto.getJson(), jsonFileRequestDto.isDraft());
 		return ResponseEntity.ok("");
 	}
 

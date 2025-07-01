@@ -23,5 +23,5 @@ public interface ServiceInfoCreateService {
     String createJsonString(final String fname, final String video_link, final String category, final List<String> population,
                             final List<String> contexte, final List<String> name, final List<String> href, String resource_link,
                             final String responsable, final String description) throws JsonProcessingException;
-    boolean saveJsonFile(final String fname, final String json);
+    boolean saveJsonFile(final String fname, final String json, final boolean isDraft);
 }

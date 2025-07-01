@@ -22,21 +22,16 @@ function ajouterTuto() {
     div.innerHTML = `
     <input type="text" name="name" placeholder="Titre">
     <input type="text" name="href" placeholder="Lien">
+    <button type="button" class="supprimer-tuto">Supprimer</button>
     `;
     container.appendChild(div);
     addEventToTuto();
     majDroite();
-}
-
-// Suppression du dernier tuto
-function enleverDernierTuto() {
-    const container = document.getElementById('liens-container');
-    const tutos = container.querySelectorAll('.lien-item');
-    if (tutos.length > 0) {
-        const dernier = tutos[tutos.length - 1];
-        container.removeChild(dernier);
-    }
-    majDroite();
+    // Bouton pour supprimer les tutos
+    div.querySelector('.supprimer-tuto').addEventListener('click', () => {
+        container.removeChild(div);
+        majDroite();
+    });
 }
 
 // Marquage des tutos
@@ -82,9 +77,12 @@ gauche.querySelectorAll('input').forEach(el => {
         el.addEventListener('input', majDroite);
     }
 });
-
 const category = document.getElementById('category');
 category.addEventListener('change', async () => {
+    majDroite();
+});
+const responsable = document.getElementById('responsable');
+responsable.addEventListener('change', async () => {
     majDroite();
 });
 
@@ -144,8 +142,13 @@ function appelerApiEtRemplir() {
             div.innerHTML = `
             <input type="text" name="name" placeholder="Titre" value="${val.name}">
             <input type="text" name="href" placeholder="Lien" value="${val.href}">
+            <button type="button" class="supprimer-tuto">Supprimer</button>
             `;
             container.appendChild(div);
+            div.querySelector('.supprimer-tuto').addEventListener('click', () => {
+                container.removeChild(div);
+                majDroite();
+            });
         });
         addEventToTuto();
     })
@@ -188,19 +191,19 @@ function majDroite() {
     }
 }
 
-// Sauvegarde d'un fichier JSON en brouillon
-function saveJsonFile() {
+// Sauvegarde d'un fichier JSON
+function saveJsonFile(is_draft) {
     fetch('/service-info-api/api/saveFile', {
         method: 'POST',
         headers: {'Content-Type': 'application/json' },
         body: JSON.stringify({
             fname: document.getElementById('fname').value,
-            json: document.getElementById('resultat').innerHTML
+            json: document.getElementById('resultat').innerHTML,
+            draft: is_draft
         })
     })
     .then(response => response.json())
     .catch(error => {
         console.error('Erreur lors de l’envoi :', error);
     });
-
 }

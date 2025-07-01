@@ -48,8 +48,14 @@ public class ServiceInfoCreateServiceImpl implements ServiceInfoCreateService {
     }
 
     @Override
-    public boolean saveJsonFile(final String fname, final String json) {
-        try (FileWriter file = new FileWriter(appConfProperties.getDraftJsonFolder()+"/"+fname+".json")) {
+    public boolean saveJsonFile(final String fname, final String json, final boolean isDraft) {
+        String folder;
+        if(isDraft){
+            folder = appConfProperties.getDraftJsonFolder();
+        } else {
+            folder = appConfProperties.getJsonFolder();
+        }
+        try (FileWriter file = new FileWriter(folder+"/"+fname+".json")) {
             file.write(json);
             return true;
         } catch (IOException e) {
