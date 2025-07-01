@@ -40,16 +40,18 @@ public class IJsonFileDaoImpl implements IJsonFileDao {
     @Autowired
     private CategoryMappingLoaderService categoryMappingLoaderService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Override
     public ServiceInfoDto findServiceInfoFromFname(String fname, String folder) throws FileNotFoundException {
-        ObjectMapper mapper = new ObjectMapper();
         final String filename = folder + "/" + fname + ".json";
         File file = new File(filename);
         if (!file.exists()) {
             throw new FileNotFoundException("Fichier JSON non trouvé : " + filename);
         }
         try {
-            ServiceInfoDto serviceInfoDto = mapper.readValue(file, ServiceInfoDto.class);
+            ServiceInfoDto serviceInfoDto = objectMapper.readValue(file, ServiceInfoDto.class);
             serviceInfoDto.setCategorie_principale(categoryMappingLoaderService.getValue(fname));
             return serviceInfoDto;
         } catch (IOException e) {

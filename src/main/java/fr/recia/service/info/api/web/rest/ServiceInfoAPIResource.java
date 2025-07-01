@@ -19,7 +19,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.recia.service.info.api.config.bean.ApiEndpoints;
 import fr.recia.service.info.api.dto.JsonFileRequestDto;
 import fr.recia.service.info.api.dto.ServiceInfoDto;
-import fr.recia.service.info.api.service.CategoryMappingLoaderService;
 import fr.recia.service.info.api.service.impl.ServiceInfoAPIService;
 import fr.recia.service.info.api.service.impl.ServiceInfoCreateService;
 import lombok.extern.slf4j.Slf4j;
@@ -52,28 +51,27 @@ public class ServiceInfoAPIResource {
 
 	@RequestMapping(value = "/" + ApiEndpoints.READ_SERVICE_INFO + "/{fname}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ServiceInfoDto> getServiceInfo(@PathVariable String fname, HttpServletResponse response) {
-		log.info("Requesting infos of {}", fname);
+		log.trace("Requesting infos of {}", fname);
 		try {
 			return new ResponseEntity<>(serviceInfoAPIService.getServiceInfo(fname), HttpStatus.OK);
 		} catch (FileNotFoundException ex) {
-			log.error(String.format(ApiEndpoints.READ_SERVICE_INFO + " - Service '%s' non trouvé", fname));
+			log.error("{} - Service {} non trouvé",ApiEndpoints.READ_SERVICE_INFO, fname);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
-			log.error(ApiEndpoints.READ_SERVICE_INFO + " - ", e);
+			log.error("An error ocurred on {}", ApiEndpoints.READ_SERVICE_INFO, e);
 		}
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@RequestMapping(value = "/" + ApiEndpoints.READ_SERVICE_INFO_DRAFT + "/{fname}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ServiceInfoDto> getServiceInfoDraft(@PathVariable String fname, HttpServletResponse response) {
-		log.info("Requesting infos of {}", fname);
 		try {
 			return new ResponseEntity<>(serviceInfoAPIService.getDraftServiceInfo(fname), HttpStatus.OK);
 		} catch (FileNotFoundException ex) {
-			log.error(String.format(ApiEndpoints.READ_SERVICE_INFO + " - Service '%s' non trouvé", fname));
+			log.error("{} - Service {} non trouvé",ApiEndpoints.READ_SERVICE_INFO, fname);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
-			log.error(ApiEndpoints.READ_SERVICE_INFO + " - ", e);
+			log.error("An error ocurred on {}", ApiEndpoints.READ_SERVICE_INFO, e);
 		}
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -91,18 +89,6 @@ public class ServiceInfoAPIResource {
 			@RequestParam(required = false) String resource_link,
 			@RequestParam(required = false) String responsable,
 			@RequestParam String description) {
-
-		log.debug("Fname: " + fname);
-		log.debug("Video link: " + video_link);
-		log.debug("Category: " + category);
-		log.debug("Population: " + population);
-		log.debug("Contexte: " + contexte);
-		log.debug("Titre: " + name);
-		log.debug("Url: " + href);
-		log.debug("Url: " + href);
-		log.debug("Tutorial link: " + resource_link);
-		log.debug("Description: " + description);
-
 		try {
 			return ResponseEntity.ok(serviceInfoCreateService.createJsonString(fname, video_link, category, population,
 					contexte, name, href, resource_link, responsable, description));
@@ -115,11 +101,11 @@ public class ServiceInfoAPIResource {
 	@RequestMapping(value = ApiEndpoints.SAVE_JSON_FILE, method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> saveJsonFile(@RequestBody JsonFileRequestDto jsonFileRequestDto) {
-		log.debug("Fname: " + jsonFileRequestDto.getFname());
-		log.debug("Json: " + jsonFileRequestDto.getJson());
-		log.debug("Draft: " + jsonFileRequestDto.isDraft());
 		boolean success = serviceInfoCreateService.saveJsonFile(jsonFileRequestDto.getFname(), jsonFileRequestDto.getJson(), jsonFileRequestDto.isDraft());
-		return ResponseEntity.ok("");
+		if(success){
+			return ResponseEntity.ok("");
+		}
+		return ResponseEntity.internalServerError().build();
 	}
 
 }

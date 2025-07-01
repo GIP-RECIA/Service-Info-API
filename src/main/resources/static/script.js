@@ -49,7 +49,6 @@ function ajouterTuto() {
         majDroite();
     });
 }
-
 // Marquage des tutos
 function addEventToTuto(){
     const elements = gauche.querySelectorAll('input');
@@ -77,7 +76,7 @@ let stopUpdate=0;
 // Marquage des autres input
 const gauche = document.getElementById('gauche');
 gauche.querySelectorAll('input').forEach(el => {
-    if(el.type === 'checkbox' || el.type === 'radio') {
+    if(el.type === 'checkbox') {
         el.addEventListener('change', majDroite);
     } else {
         el.addEventListener('input', majDroite);
@@ -93,6 +92,59 @@ responsable.addEventListener('change', async () => {
 });
 
 // Remplissage des champs à partir d'un fichier existant
+function majGauche(data){
+    // Lien vidéo
+    document.getElementById('video_link').value = data.video_link || '';
+
+    // Lien turoriel
+    document.getElementById('resource_link').value = data.resource_link || '';
+
+    // Populations cible
+    if(data.populations_cible) {
+        data.populations_cible.forEach(val => {
+            const checkbox = document.querySelector(`input[name="population"][value="${val}"]`);
+            if (checkbox) checkbox.checked = true;
+        });
+    }
+
+    // Contextes cible
+    if(data.contextes_cible) {
+        data.contextes_cible.forEach(val => {
+            const checkbox = document.querySelector(`input[name="contexte"][value="${val}"]`);
+            if (checkbox) checkbox.checked = true;
+        });
+    }
+
+    // Catégorie
+    const category = document.getElementById("category");
+    category.value = data.categorie_principale;
+
+    // Responsable
+    const responsable = document.getElementById("responsable");
+    responsable.value = data.responsable;
+
+    // Description
+    quill.clipboard.dangerouslyPasteHTML(data.description);
+
+    // Tutoriels
+    const container = document.getElementById('liens-container');
+    container.innerHTML = "";
+    data.tutorials.forEach(val => {
+        const div = document.createElement('div');
+        div.className = 'lien-item';
+        div.innerHTML = `
+        <input type="text" name="name" placeholder="Titre" value="${val.name}">
+        <input type="text" name="href" placeholder="Lien" value="${val.href}">
+        <button type="button" class="supprimer-tuto">Supprimer</button>
+        `;
+        container.appendChild(div);
+        div.querySelector('.supprimer-tuto').addEventListener('click', () => {
+            container.removeChild(div);
+            majDroite();
+        });
+    });
+    addEventToTuto();
+}
 function appelerApiEtRemplir() {
     fetch('/service-info-api/api/serviceInfo/'+fnameInput.value)
     .then(response => {
@@ -105,58 +157,7 @@ function appelerApiEtRemplir() {
         }
     })
     .then(data => {
-        // Lien vidéo
-        document.getElementById('video_link').value = data.video_link || '';
-
-        // Lien turoriel
-        document.getElementById('resource_link').value = data.resource_link || '';
-
-        // Populations cible
-        if(data.populations_cible) {
-            data.populations_cible.forEach(val => {
-                const checkbox = document.querySelector(`input[name="population"][value="${val}"]`);
-                if (checkbox) checkbox.checked = true;
-            });
-        }
-
-        // Contextes cible
-        if(data.contextes_cible) {
-            data.contextes_cible.forEach(val => {
-                const checkbox = document.querySelector(`input[name="contexte"][value="${val}"]`);
-                if (checkbox) checkbox.checked = true;
-            });
-        }
-
-        // Catégorie
-        const category = document.getElementById("category");
-        category.value = data.categorie_principale;
-
-        // Responsable
-        const responsable = document.getElementById("responsable");
-        responsable.value = data.responsable;
-
-        // Description
-        quill.clipboard.dangerouslyPasteHTML(data.description);
-
-        // Tutoriels
-        const container = document.getElementById('liens-container');
-        container.innerHTML = "";
-        data.tutorials.forEach(val => {
-            console.log(val);
-            const div = document.createElement('div');
-            div.className = 'lien-item';
-            div.innerHTML = `
-            <input type="text" name="name" placeholder="Titre" value="${val.name}">
-            <input type="text" name="href" placeholder="Lien" value="${val.href}">
-            <button type="button" class="supprimer-tuto">Supprimer</button>
-            `;
-            container.appendChild(div);
-            div.querySelector('.supprimer-tuto').addEventListener('click', () => {
-                container.removeChild(div);
-                majDroite();
-            });
-        });
-        addEventToTuto();
+        majGauche(data);
     })
     .catch(err => {
         console.log(err);
@@ -178,58 +179,7 @@ function appelerApiEtRemplirDraft() {
         }
     })
     .then(data => {
-        // Lien vidéo
-        document.getElementById('video_link').value = data.video_link || '';
-
-        // Lien turoriel
-        document.getElementById('resource_link').value = data.resource_link || '';
-
-        // Populations cible
-        if(data.populations_cible) {
-            data.populations_cible.forEach(val => {
-                const checkbox = document.querySelector(`input[name="population"][value="${val}"]`);
-                if (checkbox) checkbox.checked = true;
-            });
-        }
-
-        // Contextes cible
-        if(data.contextes_cible) {
-            data.contextes_cible.forEach(val => {
-                const checkbox = document.querySelector(`input[name="contexte"][value="${val}"]`);
-                if (checkbox) checkbox.checked = true;
-            });
-        }
-
-        // Catégorie
-        const category = document.getElementById("category");
-        category.value = data.categorie_principale;
-
-        // Responsable
-        const responsable = document.getElementById("responsable");
-        responsable.value = data.responsable;
-
-        // Description
-        quill.clipboard.dangerouslyPasteHTML(data.description);
-
-        // Tutoriels
-        const container = document.getElementById('liens-container');
-        container.innerHTML = "";
-        data.tutorials.forEach(val => {
-            console.log(val);
-            const div = document.createElement('div');
-            div.className = 'lien-item';
-            div.innerHTML = `
-            <input type="text" name="name" placeholder="Titre" value="${val.name}">
-            <input type="text" name="href" placeholder="Lien" value="${val.href}">
-            <button type="button" class="supprimer-tuto">Supprimer</button>
-            `;
-            container.appendChild(div);
-            div.querySelector('.supprimer-tuto').addEventListener('click', () => {
-                container.removeChild(div);
-                majDroite();
-            });
-        });
-        addEventToTuto();
+        majGauche(data);
     })
     .catch(err => {
         console.log(err);
@@ -251,7 +201,6 @@ function majDroite() {
         .then(response => response.json())
         .then(data => {
             const layout = document.querySelector('r-service-info-layout');
-            console.log(data)
             layout.setAttribute('name', document.getElementById('fname').value);
             layout.setAttribute('description', data.description);
             layout.setAttribute('video', data.video_link)
@@ -270,7 +219,7 @@ function majDroite() {
     }
 }
 
-// Sauvegarde d'un fichier JSON
+// Sauvegarde d'un fichier JSON en draft ou en prod
 function saveJsonFile(is_draft) {
     fetch('/service-info-api/api/saveFile', {
         method: 'POST',
