@@ -25,6 +25,7 @@ app:
   conf:
     jsonFolder: "/tmp"
     draftJsonFolder: "/tmp/draft"
+    categoriesMappingFile: "/tmp/service_category.csv"
     casServiceId: "http://localhost:8080/service-info-api/login/cas"
     casServerUrl: "https://localhost:8443/cas"
     casProviderKey: "casProviderKey"

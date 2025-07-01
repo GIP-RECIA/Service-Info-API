@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.recia.service.info.api.config.bean.AppConfProperties;
 import fr.recia.service.info.api.dao.IJsonFileDao;
 import fr.recia.service.info.api.dto.ServiceInfoDto;
+import fr.recia.service.info.api.service.CategoryMappingLoaderService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +41,9 @@ public class IJsonFileDaoImpl implements IJsonFileDao {
     @Autowired
     private AppConfProperties appConfProperties;
 
+    @Autowired
+    private CategoryMappingLoaderService categoryMappingLoaderService;
+
     @Override
     public ServiceInfoDto findServiceInfoFromFname(String fname) throws FileNotFoundException {
         ObjectMapper mapper = new ObjectMapper();
@@ -49,7 +53,9 @@ public class IJsonFileDaoImpl implements IJsonFileDao {
             throw new FileNotFoundException("Fichier JSON non trouvé : " + filename);
         }
         try {
-            return mapper.readValue(file, ServiceInfoDto.class);
+            ServiceInfoDto serviceInfoDto = mapper.readValue(file, ServiceInfoDto.class);
+            serviceInfoDto.setCategorie_principale(categoryMappingLoaderService.getValue(fname));
+            return serviceInfoDto;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -16,7 +16,6 @@
 package fr.recia.service.info.api.web.rest;
 
 import fr.recia.service.info.api.config.bean.ApiEndpoints;
-import fr.recia.service.info.api.config.bean.Categories;
 import fr.recia.service.info.api.config.bean.Fnames;
 import fr.recia.service.info.api.config.bean.Responsables;
 import fr.recia.service.info.api.config.bean.TargetContext;
@@ -37,7 +36,6 @@ public class ServiceInfoCreate {
 		model.addAttribute("fnameOptions", Fnames.values());
 		model.addAttribute("populations", TargetPopulation.getStringValues());
 		model.addAttribute("contexts", TargetContext.getStringValues());
-		model.addAttribute("categories", Categories.getStringValues());
 		model.addAttribute("responsables", Responsables.getStringValues());
 		return "index";
 	}

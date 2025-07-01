@@ -28,13 +28,7 @@
                 <br><br>
 
                 <label for="category">Catégorie principale :</label>
-                <select id="category" name="category">
-                    <option value="" text=""></option>
-                    <option th:each="option : ${categories}"
-                            th:value="${option}"
-                            th:text="${option}">
-                    </option>
-                </select>
+                <input type="text" id="category" name="category" readonly>
 
                 <br>
 
