@@ -16,11 +16,12 @@
 package fr.recia.service.info.api.web.rest;
 
 import fr.recia.service.info.api.config.bean.ApiEndpoints;
-import fr.recia.service.info.api.config.bean.Fnames;
 import fr.recia.service.info.api.config.bean.Responsables;
 import fr.recia.service.info.api.config.bean.TargetContext;
 import fr.recia.service.info.api.config.bean.TargetPopulation;
+import fr.recia.service.info.api.repository.PortalRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -31,9 +32,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Slf4j
 public class ServiceInfoCreate {
 
+	@Autowired
+	private PortalRepository portalRepository;
+
 	@RequestMapping(value = ApiEndpoints.CREATE_SERVICE_INFO, method = RequestMethod.GET)
 	public String createServiceInfo(Model model) {
-		model.addAttribute("fnameOptions", Fnames.values());
+		model.addAttribute("fnameOptions", portalRepository.getPorletsFNames());
 		model.addAttribute("populations", TargetPopulation.getStringValues());
 		model.addAttribute("contexts", TargetContext.getStringValues());
 		model.addAttribute("responsables", Responsables.getStringValues());

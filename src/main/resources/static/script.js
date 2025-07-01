@@ -13,6 +13,22 @@ const quill = new Quill('#editor', {
 // Event pour mettre à jour la partie droite quand on intéragit avec l'éditeur wysiwyg
 quill.on('text-change', majDroite);
 
+// Gestion des input via fname avec un select avec recherche
+const fnameInput = document.getElementById('fname');
+fnameInput.addEventListener('change', async () => {
+    stopUpdate=1;
+    appelerApiEtRemplir();
+    await new Promise(r => setTimeout(r, 100));
+    stopUpdate=0;
+    majDroite();
+});
+document.addEventListener('DOMContentLoaded', () => {;
+  const choices = new Choices(fnameInput, {
+    searchEnabled: true,
+    shouldSort: false
+  });
+});
+
 // Partie gestion des tuto
 // Ajout d'un nouveau tuto
 function ajouterTuto() {
@@ -58,17 +74,7 @@ function resetFormulaire() {
 // les champs à partir d'un fichier
 let stopUpdate=0;
 
-const fnameInput = document.getElementById('fname');
-fnameInput.addEventListener('change', async () => {
-    stopUpdate=1;
-    appelerApiEtRemplir();
-    await new Promise(r => setTimeout(r, 100));
-    stopUpdate=0;
-    majDroite();
-});
-
-
-// Marquage de autres input
+// Marquage des autres input
 const gauche = document.getElementById('gauche');
 gauche.querySelectorAll('input').forEach(el => {
     if(el.type === 'checkbox' || el.type === 'radio') {

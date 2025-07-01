@@ -19,6 +19,12 @@ body {
   display: flex;
 }
 
+*,
+::after,
+::before {
+  box-sizing:border-box
+}
+
 #gauche, #droite {
   width: 50%;
   padding: 20px;
