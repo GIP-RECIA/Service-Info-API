@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.recia.service.info.api.service.impl;
+package fr.recia.service.info.api.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import fr.recia.service.info.api.dto.ServiceInfoDto;
 
-import java.util.List;
+import java.io.FileNotFoundException;
 
-public interface ServiceInfoCreateService {
-    String createJsonString(final String fname, final String video_link, final String category, final List<String> population,
-                            final List<String> contexte, final List<String> name, final List<String> href, String resource_link,
-                            final String responsable, final String description) throws JsonProcessingException;
-    boolean saveJsonFile(final String fname, final String json, final boolean isDraft);
+public interface ServiceInfoAPIService {
+    ServiceInfoDto getServiceInfo(final String fname) throws FileNotFoundException;
+    ServiceInfoDto getDraftServiceInfo(final String fname) throws FileNotFoundException;
 }

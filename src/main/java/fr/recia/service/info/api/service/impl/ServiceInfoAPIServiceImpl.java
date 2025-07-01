@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.recia.service.info.api.service;
+package fr.recia.service.info.api.service.impl;
 
 import fr.recia.service.info.api.config.bean.AppConfProperties;
 import fr.recia.service.info.api.dao.IJsonFileDao;
 import fr.recia.service.info.api.dto.ServiceInfoDto;
-import fr.recia.service.info.api.service.impl.ServiceInfoAPIService;
+import fr.recia.service.info.api.service.ServiceInfoAPIService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
