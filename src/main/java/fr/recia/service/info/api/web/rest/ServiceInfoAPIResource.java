@@ -64,6 +64,20 @@ public class ServiceInfoAPIResource {
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@RequestMapping(value = "/" + ApiEndpoints.READ_SERVICE_INFO_DRAFT + "/{fname}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<ServiceInfoDto> getServiceInfoDraft(@PathVariable String fname, HttpServletResponse response) {
+		log.info("Requesting infos of {}", fname);
+		try {
+			return new ResponseEntity<>(serviceInfoAPIService.getDraftServiceInfo(fname), HttpStatus.OK);
+		} catch (FileNotFoundException ex) {
+			log.error(String.format(ApiEndpoints.READ_SERVICE_INFO + " - Service '%s' non trouvé", fname));
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			log.error(ApiEndpoints.READ_SERVICE_INFO + " - ", e);
+		}
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 	@RequestMapping(value = ApiEndpoints.GENERATE_JSON_FILE, method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<String> generateJsonFileFromForm(

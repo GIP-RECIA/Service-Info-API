@@ -142,6 +142,7 @@ public class SecurityConfiguration {
 					.antMatchers("/"+ApiEndpoints.CREATE_SERVICE_INFO).authenticated()
 					.antMatchers("/api/"+ApiEndpoints.GENERATE_JSON_FILE).authenticated()
 					.antMatchers("/api/"+ApiEndpoints.SAVE_JSON_FILE).authenticated()
+					.antMatchers("/api/"+ApiEndpoints.READ_SERVICE_INFO_DRAFT+"/*").authenticated()
 					// Cet endpoint doit être accessible car c'est le callback du CAS vers l'appli spring pour faire valider le ticket
 					.antMatchers(appConfProperties.getCasTicketCallback()).permitAll()
 					.anyRequest().denyAll());

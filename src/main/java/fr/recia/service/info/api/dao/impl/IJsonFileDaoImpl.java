@@ -16,7 +16,6 @@
 package fr.recia.service.info.api.dao.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.recia.service.info.api.config.bean.AppConfProperties;
 import fr.recia.service.info.api.dao.IJsonFileDao;
 import fr.recia.service.info.api.dto.ServiceInfoDto;
 import fr.recia.service.info.api.service.CategoryMappingLoaderService;
@@ -39,15 +38,12 @@ import java.io.IOException;
 public class IJsonFileDaoImpl implements IJsonFileDao {
 
     @Autowired
-    private AppConfProperties appConfProperties;
-
-    @Autowired
     private CategoryMappingLoaderService categoryMappingLoaderService;
 
     @Override
-    public ServiceInfoDto findServiceInfoFromFname(String fname) throws FileNotFoundException {
+    public ServiceInfoDto findServiceInfoFromFname(String fname, String folder) throws FileNotFoundException {
         ObjectMapper mapper = new ObjectMapper();
-        final String filename = appConfProperties.getJsonFolder() + "/" + fname + ".json";
+        final String filename = folder + "/" + fname + ".json";
         File file = new File(filename);
         if (!file.exists()) {
             throw new FileNotFoundException("Fichier JSON non trouvé : " + filename);

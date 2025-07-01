@@ -165,6 +165,79 @@ function appelerApiEtRemplir() {
     });
 }
 
+// Remplissage des champs à partir d'un fichier existant
+function appelerApiEtRemplirDraft() {
+    fetch('/service-info-api/api/serviceInfoDraft/'+fnameInput.value)
+    .then(response => {
+        resetFormulaire();
+        if (!response.ok){
+            console.log(err);
+            throw new Error('Service inconnu. Création d\'une nouvelle fiche info...');
+        } else {
+            return response.json();
+        }
+    })
+    .then(data => {
+        // Lien vidéo
+        document.getElementById('video_link').value = data.video_link || '';
+
+        // Lien turoriel
+        document.getElementById('resource_link').value = data.resource_link || '';
+
+        // Populations cible
+        if(data.populations_cible) {
+            data.populations_cible.forEach(val => {
+                const checkbox = document.querySelector(`input[name="population"][value="${val}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+        }
+
+        // Contextes cible
+        if(data.contextes_cible) {
+            data.contextes_cible.forEach(val => {
+                const checkbox = document.querySelector(`input[name="contexte"][value="${val}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+        }
+
+        // Catégorie
+        const category = document.getElementById("category");
+        category.value = data.categorie_principale;
+
+        // Responsable
+        const responsable = document.getElementById("responsable");
+        responsable.value = data.responsable;
+
+        // Description
+        quill.clipboard.dangerouslyPasteHTML(data.description);
+
+        // Tutoriels
+        const container = document.getElementById('liens-container');
+        container.innerHTML = "";
+        data.tutorials.forEach(val => {
+            console.log(val);
+            const div = document.createElement('div');
+            div.className = 'lien-item';
+            div.innerHTML = `
+            <input type="text" name="name" placeholder="Titre" value="${val.name}">
+            <input type="text" name="href" placeholder="Lien" value="${val.href}">
+            <button type="button" class="supprimer-tuto">Supprimer</button>
+            `;
+            container.appendChild(div);
+            div.querySelector('.supprimer-tuto').addEventListener('click', () => {
+                container.removeChild(div);
+                majDroite();
+            });
+        });
+        addEventToTuto();
+    })
+    .catch(err => {
+        console.log(err);
+        resetFormulaire();
+        throw new Error('Service inconnu. Création d\'une nouvelle fiche info...');
+    });
+}
+
 // Remplissage de la prévisualisation (composant web) à partir des champs gauche
 function majDroite() {
     if(stopUpdate==0){
@@ -204,7 +277,7 @@ function saveJsonFile(is_draft) {
         headers: {'Content-Type': 'application/json' },
         body: JSON.stringify({
             fname: document.getElementById('fname').value,
-            json: document.getElementById('resultat').innerHTML,
+            json: document.getElementById('resultat').value,
             draft: is_draft
         })
     })
@@ -212,4 +285,21 @@ function saveJsonFile(is_draft) {
     .catch(error => {
         console.error('Erreur lors de l’envoi :', error);
     });
+}
+
+// Changer la version chargée entre prod et brouillon
+let version_draft=false;
+async function switchVersion() {
+    stopUpdate=1;
+    if(version_draft){
+        appelerApiEtRemplir();
+        document.getElementById('changeVersion').innerHTML = "Charger la version brouillon";
+    } else {
+        appelerApiEtRemplirDraft();
+        document.getElementById('changeVersion').innerHTML = "Charger la version prod";
+    }
+    version_draft = !version_draft
+    await new Promise(r => setTimeout(r, 100));
+    stopUpdate=0;
+    majDroite();
 }

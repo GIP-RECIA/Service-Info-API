@@ -21,6 +21,6 @@ import java.io.FileNotFoundException;
 
 public interface IJsonFileDao {
 
- ServiceInfoDto findServiceInfoFromFname(String fname) throws FileNotFoundException;
+ ServiceInfoDto findServiceInfoFromFname(String fname, String folder) throws FileNotFoundException;
 
 }

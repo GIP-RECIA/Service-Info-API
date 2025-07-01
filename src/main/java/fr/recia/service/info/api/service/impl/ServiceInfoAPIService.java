@@ -21,4 +21,5 @@ import java.io.FileNotFoundException;
 
 public interface ServiceInfoAPIService {
     ServiceInfoDto getServiceInfo(final String fname) throws FileNotFoundException;
+    ServiceInfoDto getDraftServiceInfo(final String fname) throws FileNotFoundException;
 }

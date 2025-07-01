@@ -15,6 +15,7 @@
  */
 package fr.recia.service.info.api.service;
 
+import fr.recia.service.info.api.config.bean.AppConfProperties;
 import fr.recia.service.info.api.dao.IJsonFileDao;
 import fr.recia.service.info.api.dto.ServiceInfoDto;
 import fr.recia.service.info.api.service.impl.ServiceInfoAPIService;
@@ -32,10 +33,18 @@ public class ServiceInfoAPIServiceImpl implements ServiceInfoAPIService {
     @Autowired
     private IJsonFileDao jsonFileDao;
 
+    @Autowired
+    private AppConfProperties appConfProperties;
+
     @Override
     @Cacheable("service-info")
     public ServiceInfoDto getServiceInfo(final String fname) throws FileNotFoundException {
-        return jsonFileDao.findServiceInfoFromFname(fname);
+        return jsonFileDao.findServiceInfoFromFname(fname, appConfProperties.getJsonFolder());
+    }
+
+    @Override
+    public ServiceInfoDto getDraftServiceInfo(final String fname) throws FileNotFoundException {
+        return jsonFileDao.findServiceInfoFromFname(fname, appConfProperties.getDraftJsonFolder());
     }
 
 }
