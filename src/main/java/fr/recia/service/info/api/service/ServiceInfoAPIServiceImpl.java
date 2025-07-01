@@ -37,7 +37,7 @@ public class ServiceInfoAPIServiceImpl implements ServiceInfoAPIService {
     private AppConfProperties appConfProperties;
 
     @Override
-    @Cacheable("service-info")
+    @Cacheable(value="service-info", key = "#fname")
     public ServiceInfoDto getServiceInfo(final String fname) throws FileNotFoundException {
         return jsonFileDao.findServiceInfoFromFname(fname, appConfProperties.getJsonFolder());
     }

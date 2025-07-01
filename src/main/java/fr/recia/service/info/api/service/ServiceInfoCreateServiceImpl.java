@@ -23,6 +23,7 @@ import fr.recia.service.info.api.dto.TutorialDto;
 import fr.recia.service.info.api.service.impl.ServiceInfoCreateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.io.FileWriter;
@@ -39,6 +40,9 @@ public class ServiceInfoCreateServiceImpl implements ServiceInfoCreateService {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private CacheEvictionService cacheEvictionService;
 
     @Override
     public String createJsonString(String fname, String video_link, String category, List<String> population, List<String> contexte, List<String> name,
@@ -70,6 +74,7 @@ public class ServiceInfoCreateServiceImpl implements ServiceInfoCreateService {
             folder = appConfProperties.getDraftJsonFolder();
         } else {
             folder = appConfProperties.getJsonFolder();
+            cacheEvictionService.evict(fname);
         }
         try (FileWriter file = new FileWriter(folder+"/"+fname+".json")) {
             file.write(json);
