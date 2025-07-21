@@ -22,7 +22,11 @@ public enum TargetPopulation {
 
     eleves("Elèves"),
     parents("Parents"),
-    enseignants("Enseignants");
+    enseignants("Enseignants"),
+    doc("Documentalistes"),
+    coll("Personnels de collectivité"),
+    direction("Personnels de direction"),
+    autres("Autres personnels");
 
     public final String population;
 
