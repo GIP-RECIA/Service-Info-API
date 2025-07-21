@@ -16,13 +16,16 @@
 package fr.recia.service.info.api.repository;
 
 import fr.recia.service.info.api.config.bean.AppConfProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@Slf4j
 public class PortalRepository {
 
     @Autowired
@@ -34,6 +37,7 @@ public class PortalRepository {
         this.jdbc = jdbc;
     }
 
+    @Cacheable(value = "service-list")
     public List<String> getPorletsFNames() {
         List<String> fnames = jdbc.queryForList("SELECT PORTLET_FNAME FROM up_portlet_def", String.class);
         fnames.removeAll(appConfProperties.getExcludedServices());

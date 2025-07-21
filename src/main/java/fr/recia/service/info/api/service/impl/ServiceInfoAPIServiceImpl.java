@@ -60,6 +60,7 @@ public class ServiceInfoAPIServiceImpl implements ServiceInfoAPIService {
     }
 
     @Override
+    @Cacheable(value = "service-all")
     public List<ServiceSummaryDto> getAllServices() throws IOException {
         List<String> allServices = portalRepository.getPorletsFNames();
         List<String> allJsons = jsonFileDao.findAllFiles();
