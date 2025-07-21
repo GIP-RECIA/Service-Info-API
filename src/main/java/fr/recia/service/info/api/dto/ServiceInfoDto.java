@@ -15,8 +15,6 @@
  */
 package fr.recia.service.info.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

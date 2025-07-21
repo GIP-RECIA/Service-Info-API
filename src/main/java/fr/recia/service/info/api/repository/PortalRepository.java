@@ -15,6 +15,8 @@
  */
 package fr.recia.service.info.api.repository;
 
+import fr.recia.service.info.api.config.bean.AppConfProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +25,9 @@ import java.util.List;
 @Repository
 public class PortalRepository {
 
+    @Autowired
+    private AppConfProperties appConfProperties;
+
     private final JdbcTemplate jdbc;
 
     public PortalRepository(JdbcTemplate jdbc) {
@@ -30,7 +35,9 @@ public class PortalRepository {
     }
 
     public List<String> getPorletsFNames() {
-        return jdbc.queryForList("SELECT PORTLET_FNAME FROM up_portlet_def", String.class);
+        List<String> fnames = jdbc.queryForList("SELECT PORTLET_FNAME FROM up_portlet_def", String.class);
+        fnames.removeAll(appConfProperties.getExcludedServices());
+        return fnames;
     }
 
 }

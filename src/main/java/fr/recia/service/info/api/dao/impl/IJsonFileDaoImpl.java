@@ -16,6 +16,7 @@
 package fr.recia.service.info.api.dao.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.recia.service.info.api.config.bean.AppConfProperties;
 import fr.recia.service.info.api.dao.IJsonFileDao;
 import fr.recia.service.info.api.dto.ServiceInfoDto;
 import fr.recia.service.info.api.service.CategoryMappingLoaderService;
@@ -29,6 +30,12 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Data
@@ -39,6 +46,9 @@ public class IJsonFileDaoImpl implements IJsonFileDao {
 
     @Autowired
     private CategoryMappingLoaderService categoryMappingLoaderService;
+
+    @Autowired
+    private AppConfProperties appConfProperties;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -57,5 +67,21 @@ public class IJsonFileDaoImpl implements IJsonFileDao {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<String> findAllFiles() throws IOException {
+        List<String> filenames = new ArrayList<>();
+        Path dossier = Paths.get(appConfProperties.getJsonFolder());
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dossier)) {
+            for (Path entry : stream) {
+                if (Files.isRegularFile(entry)) {
+                    String filename = entry.getFileName().toString();
+                    int index = filename.lastIndexOf('.');
+                    filenames.add((index > 0) ? filename.substring(0, index) : filename);
+                }
+            }
+        }
+        return filenames;
     }
 }

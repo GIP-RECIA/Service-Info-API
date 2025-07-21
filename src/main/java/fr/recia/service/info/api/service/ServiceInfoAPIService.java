@@ -16,10 +16,14 @@
 package fr.recia.service.info.api.service;
 
 import fr.recia.service.info.api.dto.ServiceInfoDto;
+import fr.recia.service.info.api.dto.ServiceSummaryDto;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 
 public interface ServiceInfoAPIService {
     ServiceInfoDto getServiceInfo(final String fname) throws FileNotFoundException;
     ServiceInfoDto getDraftServiceInfo(final String fname) throws FileNotFoundException;
+    List<ServiceSummaryDto> getAllServices() throws IOException;
 }

@@ -18,6 +18,9 @@ package fr.recia.service.info.api.service.impl;
 import fr.recia.service.info.api.config.bean.AppConfProperties;
 import fr.recia.service.info.api.dao.IJsonFileDao;
 import fr.recia.service.info.api.dto.ServiceInfoDto;
+import fr.recia.service.info.api.dto.ServiceSummaryDto;
+import fr.recia.service.info.api.repository.PortalRepository;
+import fr.recia.service.info.api.service.CategoryMappingLoaderService;
 import fr.recia.service.info.api.service.ServiceInfoAPIService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -34,7 +40,13 @@ public class ServiceInfoAPIServiceImpl implements ServiceInfoAPIService {
     private IJsonFileDao jsonFileDao;
 
     @Autowired
+    private PortalRepository portalRepository;
+
+    @Autowired
     private AppConfProperties appConfProperties;
+
+    @Autowired
+    private CategoryMappingLoaderService categoryMappingLoaderService;
 
     @Override
     @Cacheable(value="service-info", key = "#fname")
@@ -47,6 +59,18 @@ public class ServiceInfoAPIServiceImpl implements ServiceInfoAPIService {
         return jsonFileDao.findServiceInfoFromFname(fname, appConfProperties.getDraftJsonFolder());
     }
 
+    @Override
+    public List<ServiceSummaryDto> getAllServices() throws IOException {
+        List<String> allServices = portalRepository.getPorletsFNames();
+        List<String> allJsons = jsonFileDao.findAllFiles();
+        List<ServiceSummaryDto> serviceSummaryDtos = new ArrayList<>();
+        for(String fname : allServices){
+            if(allJsons.contains(fname)){
+                serviceSummaryDtos.add(new ServiceSummaryDto(fname, categoryMappingLoaderService.getValue(fname),true));
+            } else {
+                serviceSummaryDtos.add(new ServiceSummaryDto(fname, categoryMappingLoaderService.getValue(fname), false));
+            }
+        }
+        return serviceSummaryDtos;
+    }
 }
-
-

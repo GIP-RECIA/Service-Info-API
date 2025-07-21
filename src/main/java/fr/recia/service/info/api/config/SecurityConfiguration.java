@@ -136,6 +136,7 @@ public class SecurityConfiguration {
 					authorizeHttpRequests -> authorizeHttpRequests
 					.antMatchers(HealthCheck.HEALTH_CHECK).permitAll()
 					.antMatchers("/api/"+ApiEndpoints.READ_SERVICE_INFO+"/*").permitAll()
+					.antMatchers("/api/"+ApiEndpoints.GET_ALL_SERVICES).permitAll()
 					.antMatchers("/*.js").permitAll()
 					.antMatchers("/*.css").permitAll()
 					// Les endpoint en authenticated sont protégés par le CAS

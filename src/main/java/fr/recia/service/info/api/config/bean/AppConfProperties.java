@@ -22,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @ConfigurationProperties(prefix = "app.conf")
 @Data
@@ -43,6 +44,7 @@ public class AppConfProperties {
     private String casProviderKey;
     @NotNull
     private String casTicketCallback;
+    private List<String> excludedServices;
 
     @PostConstruct
     public void setupAndDebug() {

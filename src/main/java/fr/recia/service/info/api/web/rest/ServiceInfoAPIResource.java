@@ -19,6 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.recia.service.info.api.config.bean.ApiEndpoints;
 import fr.recia.service.info.api.dto.JsonFileRequestDto;
 import fr.recia.service.info.api.dto.ServiceInfoDto;
+import fr.recia.service.info.api.dto.ServiceSummaryDto;
 import fr.recia.service.info.api.service.ServiceInfoAPIService;
 import fr.recia.service.info.api.service.ServiceInfoCreateService;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +60,17 @@ public class ServiceInfoAPIResource {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			log.error("An error ocurred on {}", ApiEndpoints.READ_SERVICE_INFO, e);
+		}
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@RequestMapping(value = "/" + ApiEndpoints.GET_ALL_SERVICES, method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<ServiceSummaryDto>> getAllservices(HttpServletResponse response) {
+		log.trace("Requesting infos of all services");
+		try {
+			return new ResponseEntity<>(serviceInfoAPIService.getAllServices(), HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("An error ocurred on {}", ApiEndpoints.GET_ALL_SERVICES, e);
 		}
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}

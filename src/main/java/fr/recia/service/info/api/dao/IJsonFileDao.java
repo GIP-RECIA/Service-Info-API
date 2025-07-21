@@ -18,9 +18,12 @@ package fr.recia.service.info.api.dao;
 import fr.recia.service.info.api.dto.ServiceInfoDto;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 
 public interface IJsonFileDao {
 
  ServiceInfoDto findServiceInfoFromFname(String fname, String folder) throws FileNotFoundException;
+ List<String> findAllFiles() throws IOException;
 
 }
