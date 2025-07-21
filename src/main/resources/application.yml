@@ -30,6 +30,8 @@ app:
     casServerUrl: "https://localhost:8443/cas"
     casProviderKey: "casProviderKey"
     casTicketCallback: "/login/cas"
+    allowedOrigins:
+      - localhost
 
 spring:
   profiles:

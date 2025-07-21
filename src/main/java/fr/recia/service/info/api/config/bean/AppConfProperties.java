@@ -45,6 +45,7 @@ public class AppConfProperties {
     @NotNull
     private String casTicketCallback;
     private List<String> excludedServices;
+    private String[] allowedOrigins;
 
     @PostConstruct
     public void setupAndDebug() {
