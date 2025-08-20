@@ -74,7 +74,8 @@ public class ServiceInfoCreateServiceImpl implements ServiceInfoCreateService {
             folder = appConfProperties.getDraftJsonFolder();
         } else {
             folder = appConfProperties.getJsonFolder();
-            cacheEvictionService.evict(fname);
+            cacheEvictionService.evictService(fname);
+            cacheEvictionService.evictServiceAll();
         }
         try (FileWriter file = new FileWriter(folder+"/"+fname+".json")) {
             file.write(json);

@@ -24,8 +24,13 @@ import org.springframework.stereotype.Service;
 public class CacheEvictionService {
 
     @CacheEvict(value = "service-info", key = "#fname")
-    public void evict(String fname) {
+    public void evictService(String fname) {
         log.debug("Cache was evicted for entry {}", fname);
+    }
+
+    @CacheEvict(value="service-all")
+    public void evictServiceAll() {
+        log.debug("Cache was evicted for allServices request");
     }
 
 }
