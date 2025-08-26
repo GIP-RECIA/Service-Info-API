@@ -10,7 +10,7 @@
   </parent>
   <groupId>fr.recia.api</groupId>
   <artifactId>esco-service-info-api</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>esco-service-info-api</name>
   <description>API REST restituant des informations sur les différents services ENT (descriptions, tutoriels)</description>
