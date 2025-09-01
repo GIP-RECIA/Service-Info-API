@@ -10,7 +10,7 @@
   </parent>
   <groupId>fr.recia.api</groupId>
   <artifactId>esco-service-info-api</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>esco-service-info-api</name>
   <description>API REST restituant des informations sur les différents services ENT (descriptions, tutoriels)</description>
@@ -18,7 +18,7 @@
   <scm>
     <connection>scm:git:ssh://git@github.com/GIP-RECIA/Service-Info-API.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/Service-Info-API.git</developerConnection>
-    <tag>1.0.1</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/GIP-RECIA/Service-Info-API.git</url>
   </scm>
 
