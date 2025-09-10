@@ -206,11 +206,11 @@ function majDroite() {
             layout.setAttribute('video', data.video_link)
             layout.setAttribute('category', data.categorie_principale)
             if(data.resource_link != ""){
-                layout.setAttribute('tutorials-link', JSON.stringify({ "href": data.resource_link }))
+                layout.setAttribute('ressources-link', JSON.stringify({ "href": data.resource_link }))
             } else {
-                layout.setAttribute('tutorials-link', "")
+                layout.setAttribute('ressources-link', "")
             }
-            layout.setAttribute('tutorials', JSON.stringify(data.tutorials));
+            layout.setAttribute('ressources', JSON.stringify(data.tutorials));
             document.getElementById('resultat').innerHTML = JSON.stringify(data);
         })
         .catch(error => {
