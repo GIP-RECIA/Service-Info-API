@@ -8,115 +8,123 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     </head>
     <body>
-        <div id="gauche">
-
-            <label for="fname">Nom du service (fname) :</label>
-            <select id="fname" name="fname">
-                <option value="" text=""></option>
-                <option th:each="option : ${fnameOptions}"
-                        th:value="${option}"
-                        th:text="${option}">
-                </option>
-            </select>
-
-            <button id="changeVersion" onclick="switchVersion()">Charger la version brouillon</button>
-
-            <hr class="separateur">
-
-            <form id="createJsonForm">
-
-                <label for="video_link">Premiers pas avec le service :</label>
-                <input type="text" id="video_link" name="video_link">
-
-                <br><br>
-
-                <label for="category">Catégorie principale :</label>
-                <input type="text" id="category" name="category" readonly>
-
-                <br>
-
-                <div id="resource_title">
-                    <p>Ressources : </p>
-                    <button type="button" onclick="ajouterTuto()">Ajouter une ressource</button>
-                </div>
-                <div id="liens-container">
-                </div>
-                <br>
-
-                <label for="resource_link">Lien vers toutes les ressources :</label>
-                <input type="text" id="resource_link" name="resource_link">
-
-                <br>
-
-                <p>Populations cible :</p>
-                <div th:each="pop : ${populations}">
-                    <input type="checkbox" th:id="${'population_' + pop}" th:name="population" th:value="${pop}">
-                    <label th:for="${'population_' + pop}" th:text="${pop}"></label><br>
-                </div>
-
-                <br>
-
-                <p>Contextes cible :</p>
-                <div th:each="ctx : ${contexts}">
-                    <input type="checkbox" th:id="${'contexte_' + ctx}" th:name="contexte" th:value="${ctx}">
-                    <label th:for="${'contexte_' + ctx}" th:text="${ctx}"></label><br>
-                </div>
-
-                <br>
-
-                <label for="responsable">Responsable :</label>
-                <select id="responsable" name="responsable">
+        <header>
+            <extended-uportal-header
+                template-api-url="/commun/portal_template_api.tpl.json"
+                dnma-url=""
+            >
+            </extended-uportal-header>
+        </header>
+        <main>
+            <div id="gauche">
+    
+                <label for="fname">Nom du service (fname) :</label>
+                <select id="fname" name="fname">
                     <option value="" text=""></option>
-                    <option th:each="option : ${responsables}"
+                    <option th:each="option : ${fnameOptions}"
                             th:value="${option}"
                             th:text="${option}">
                     </option>
                 </select>
-
-                <br><br>
-
-                <label for="description">Description :</label>
-                <br><br>
-                <div id="editor"></div>
-                <input type="hidden" name="description" id="description">
-
-            </form>
-
-            <hr class="separateur">
-
-            <div class="result">
-                <p>Résultat du fichier JSON (lecture seule) :</p>
-                <textarea id="resultat" readonly></textarea>
+    
+                <button id="changeVersion" onclick="switchVersion()">Charger la version brouillon</button>
+    
+                <hr class="separateur">
+    
+                <form id="createJsonForm">
+    
+                    <label for="video_link">Premiers pas avec le service :</label>
+                    <input type="text" id="video_link" name="video_link">
+    
+                    <br><br>
+    
+                    <label for="category">Catégorie principale :</label>
+                    <input type="text" id="category" name="category" readonly>
+    
+                    <br>
+    
+                    <div id="resource_title">
+                        <p>Ressources : </p>
+                        <button type="button" onclick="ajouterTuto()">Ajouter une ressource</button>
+                    </div>
+                    <div id="liens-container">
+                    </div>
+                    <br>
+    
+                    <label for="resource_link">Lien vers toutes les ressources :</label>
+                    <input type="text" id="resource_link" name="resource_link">
+    
+                    <br>
+    
+                    <p>Populations cible :</p>
+                    <div th:each="pop : ${populations}">
+                        <input type="checkbox" th:id="${'population_' + pop}" th:name="population" th:value="${pop}">
+                        <label th:for="${'population_' + pop}" th:text="${pop}"></label><br>
+                    </div>
+    
+                    <br>
+    
+                    <p>Contextes cible :</p>
+                    <div th:each="ctx : ${contexts}">
+                        <input type="checkbox" th:id="${'contexte_' + ctx}" th:name="contexte" th:value="${ctx}">
+                        <label th:for="${'contexte_' + ctx}" th:text="${ctx}"></label><br>
+                    </div>
+    
+                    <br>
+    
+                    <label for="responsable">Responsable :</label>
+                    <select id="responsable" name="responsable">
+                        <option value="" text=""></option>
+                        <option th:each="option : ${responsables}"
+                                th:value="${option}"
+                                th:text="${option}">
+                        </option>
+                    </select>
+    
+                    <br><br>
+    
+                    <label for="description">Description :</label>
+                    <br><br>
+                    <div id="editor"></div>
+                    <input type="hidden" name="description" id="description">
+    
+                </form>
+    
+                <hr class="separateur">
+    
+                <div class="result">
+                    <p>Résultat du fichier JSON (lecture seule) :</p>
+                    <textarea id="resultat" readonly></textarea>
+                </div>
+    
+                <br>
+    
+                <button onclick="saveJsonFile(true)">Sauvegarder le brouillon</button>
+                <button onclick="saveJsonFile(false)">Pousser en production</button>
+    
             </div>
-
-            <br>
-
-            <button onclick="saveJsonFile(true)">Sauvegarder le brouillon</button>
-            <button onclick="saveJsonFile(false)">Pousser en production</button>
-
-        </div>
-
-        <div id="droite">
-
-            <div class="wrapper">
-                <r-service-info-layout
-                        icon-url=""
-                        name=""
-                        origin="external"
-                        category=""
-                        description=''
-                        video=""
-                        ressources='[]'
-                        ressources-link=""
-                        launch-link='{"href": "#"}'
-                >
-                </r-service-info-layout>
+    
+            <div id="droite">
+    
+                <div class="wrapper">
+                    <r-service-info-layout
+                            icon-url=""
+                            name=""
+                            category=""
+                            description=''
+                            video=""
+                            ressources='[]'
+                            ressources-link=""
+                            launch-link='{"href": "#"}'
+                    >
+                    </r-service-info-layout>
+                </div>
             </div>
-        </div>
+        </main>
 
         <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
         <script th:src="@{/script.js}"></script>
-        <script th:src="@{/r-service-info-layout.js}"></script>
+        <script type="module" src="/resource-server/webjars/gip-recia__ui-webcomponents/dist/r-header.js"></script>
     </body>
 </html>

@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-}
 
 *,
 ::after,
@@ -72,250 +67,28 @@ textarea {
   resize: none;
 }
 
-:root {
-  --recia-body: #1E1E1E;
-  --recia-body-inverted: #FFF;
-  --recia-body-bg: #FFF;
-  --recia-white: #FFF;
-  --recia-black: #000;
-  --recia-favorite: #FFAA46;
-  --recia-stroke: #E9E9E9;
-  --recia-tutorial: #171717;
-  --recia-basic-grey: #F4F4F4;
-  --recia-basic-black: #1E1E1E;
-  --recia-basic-black-lighter: #737373;
-  --recia-lighter-black: #2C2C2C;
-  --recia-system-blue: #005099;
-  --recia-system-red: #AD1919;
-  --recia-primary: #0062BC;
-  --recia-primary-light: #0062BC;
-  --recia-hover: #F8F8F8;
-  --recia-hover-light: #F8F8F8;
-  --recia-primary-inverted: #57AEFF;
-  --recia-primary-dark: #57AEFF;
-  --recia-hover-inverted: #262626;
-  --recia-hover-dark: #262626;
-  --recia-documentation: #AB47BC;
-  --recia-documentation-hover: #C400F3;
-  --recia-documentation-hover-shadow: rgba(from var(--recia-documentation-hover) r g b/.1);
-  --recia-documentation-text: #FFF;
-  --recia-collaboratif: #5747BC;
-  --recia-collaboratif-hover: #665BE7;
-  --recia-collaboratif-hover-shadow: rgba(from var(--recia-collaboratif-hover) r g b/.15);
-  --recia-collaboratif-text: #FFF;
-  --recia-apprentissage: #FFAC2F;
-  --recia-apprentissage-hover: #F5C72E;
-  --recia-apprentissage-hover-shadow: rgba(from var(--recia-apprentissage-hover) r g b/.15);
-  --recia-apprentissage-text: #000;
-  --recia-vie-scolaire: #858585;
-  --recia-vie-scolaire-hover: #5B5B5B;
-  --recia-vie-scolaire-hover-shadow: rgba(from var(--recia-vie-scolaire-hover) r g b/.15);
-  --recia-vie-scolaire-text: #000;
-  --recia-orientation: #26C6DA;
-  --recia-orientation-hover: #70EAF5;
-  --recia-orientation-hover-shadow: rgba(from var(--recia-orientation-hover) r g b/.15);
-  --recia-orientation-text: #000;
-  --recia-parametres: #66BB6A;
-  --recia-parametres-hover: #4EF186;
-  --recia-parametres-hover-shadow: rgba(from var(--recia-parametres-hover) r g b/.15);
-  --recia-parametres-text: #000;
-  --recia-communication: #EC407A;
-  --recia-communication-hover: #F60086;
-  --recia-communication-hover-shadow: rgba(from var(--recia-communication-hover) r g b/.2);
-  --recia-communication-text: #000;
-  --recia-btn-primary: #FFF;
-  --recia-btn-primary-light: #FFF;
-  --recia-btn-primary-pressed: #004584;
-  --recia-btn-primary-pressed-light: #004584;
-  --recia-btn-secondary: #1E1E1E;
-  --recia-btn-secondary-light: #1E1E1E;
-  --recia-btn-secondary-hover: #E6EFF8;
-  --recia-btn-secondary-hover-light: #E6EFF8;
-  --recia-btn-secondary-pressed: #CCE0F2;
-  --recia-btn-secondary-pressed-light: #CCE0F2;
-  --recia-btn-primary-bg: #1E1E1E;
-  --recia-btn-primary-bg-light: #1E1E1E;
-  --recia-btn-secondary-bg: #F4F4F4;
-  --recia-btn-secondary-bg-light: #F4F4F4;
-  --recia-btn-primary-inverted: #1E1E1E;
-  --recia-btn-primary-dark: #1E1E1E;
-  --recia-btn-primary-pressed-inverted: #8AC7FF;
-  --recia-btn-primary-pressed-dark: #8AC7FF;
-  --recia-btn-secondary-inverted: #FFF;
-  --recia-btn-secondary-dark: #FFF;
-  --recia-btn-secondary-hover-inverted: #1A1F23;
-  --recia-btn-secondary-hover-dark: #1A1F23;
-  --recia-btn-secondary-pressed-inverted: #212E3A;
-  --recia-btn-secondary-pressed-dark: #212E3A;
-  --recia-btn-primary-bg-inverted: #FFF;
-  --recia-btn-primary-bg-dark: #FFF;
-  --recia-btn-secondary-bg-inverted: #1E1E1E;
-  --recia-btn-secondary-bg-dark: #1E1E1E;
-  --recia-shadow-neutral: 0 4px 15.9px 0;
-  --recia-shadow-strong: 0 4px 24.4px 0;
-  --recia-shadow-hover: 0 4px 26px 0;
-  --recia-shadow-low-elevation: 0 2px 6px 0;
-  --recia-shadow-low-elevation-avatar-notif: 0 1px 24px 0;
-  --recia-font-size-base: 1rem;
-  --recia-body-font-size: calc(var(--recia-font-size-base) * .75);
-  --recia-font-size-xxs: calc(var(--recia-font-size-base) * .625);
-  --recia-font-size-xs: calc(var(--recia-font-size-base) * .75);
-  --recia-font-size-sm: calc(var(--recia-font-size-base) * .875);
-  --recia-font-size-md: calc(var(--recia-font-size-base) * 1);
-  --recia-font-size-lg: calc(var(--recia-font-size-base) * 1.125);
-  --recia-font-size-xl: calc(var(--recia-font-size-base) * 1.25);
-  --recia-font-size-xxl: calc(var(--recia-font-size-base) * 1.5);
-  --recia-font-size-h1: calc(var(--recia-font-size-base) * 1.25);
-  --recia-font-size-h2: calc(var(--recia-font-size-base) * 1.125);
-  --recia-font-size-h3: calc(var(--recia-font-size-base) * 1);
-  --recia-font-size-h4: calc(var(--recia-font-size-base) * .875)
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme:dark;
-    --recia-body: #FFF;
-    --recia-body-inverted: #1E1E1E;
-    --recia-body-bg: #1E1E1E;
-    --recia-primary: #57AEFF;
-    --recia-hover: #262626;
-    --recia-primary-inverted: #0062BC;
-    --recia-hover-inverted: #F8F8F8;
-    --recia-btn-primary: #1E1E1E;
-    --recia-btn-primary-pressed: #8AC7FF;
-    --recia-btn-secondary: #FFF;
-    --recia-btn-secondary-hover: #1A1F23;
-    --recia-btn-secondary-pressed: #212E3A;
-    --recia-btn-primary-bg: #FFF;
-    --recia-btn-secondary-bg: #1E1E1E;
-    --recia-btn-primary-inverted: #FFF;
-    --recia-btn-primary-pressed-inverted: #004584;
-    --recia-btn-secondary-inverted: #1E1E1E;
-    --recia-btn-secondary-hover-inverted: #E6EFF8;
-    --recia-btn-secondary-pressed-inverted: #CCE0F2;
-    --recia-btn-primary-bg-inverted: #1E1E1E;
-    --recia-btn-secondary-bg-inverted: #F4F4F4
-  }
-}
-@media screen and (width >= 992px) {
-  :root {
-    --recia-body-font-size: calc(var(--recia-font-size-base) * .875);
-    --recia-font-size-h1: calc(var(--recia-font-size-base) * 1.5);
-    --recia-font-size-h2: calc(var(--recia-font-size-base) * 1.25);
-    --recia-font-size-h3: calc(var(--recia-font-size-base) * 1);
-    --recia-font-size-h4: calc(var(--recia-font-size-base) * .875)
-  }
-}
-@font-face {
-  font-family:DM Sans;
-  src:url(https://lycees.test.recia.dev/commun/fonts/DM_Sans/static/DMSans-Bold.ttf) format("truetype");
-  font-weight:700;
-  font-style:normal;
-  font-display:swap
-}
-@font-face {
-  font-family:DM Sans;
-  src:url(https://lycees.test.recia.dev/commun/fonts/DM_Sans/static/DMSans-BoldItalic.ttf) format("truetype");
-  font-weight:700;
-  font-style:italic;
-  font-display:swap
-}
-@font-face {
-  font-family:DM Sans;
-  src:url(https://lycees.test.recia.dev/commun/fonts/DM_Sans/static/DMSans-Italic.ttf) format("truetype");
-  font-weight:400;
-  font-style:italic;
-  font-display:swap
-}
-@font-face {
-  font-family:DM Sans;
-  src:url(https://lycees.test.recia.dev/commun/fonts/DM_Sans/static/DMSans-Medium.ttf) format("truetype");
-  font-weight:500;
-  font-style:normal;
-  font-display:swap
-}
-@font-face {
-  font-family:DM Sans;
-  src:url(https://lycees.test.recia.dev/commun/fonts/DM_Sans/static/DMSans-MediumItalic.ttf) format("truetype");
-  font-weight:500;
-  font-style:italic;
-  font-display:swap
-}
-@font-face {
-  font-family:DM Sans;
-  src:url(https://lycees.test.recia.dev/commun/fonts/DM_Sans/static/DMSans-Regular.ttf) format("truetype");
-  font-weight:400;
-  font-style:normal;
-  font-display:swap
-}
-@font-face {
-  font-family:DM Sans;
-  src:url(https://lycees.test.recia.dev/commun/fonts/DM_Sans/static/DMSans-SemiBold.ttf) format("truetype");
-  font-weight:600;
-  font-style:normal;
-  font-display:swap
-}
-@font-face {
-  font-family:Sora;
-  src:url(https://lycees.test.recia.dev/commun/fonts/DM_Sans/static/Sora-Bold.ttf) format("truetype");
-  font-weight:700;
-  font-style:normal;
-  font-display:swap
-}
-@font-face {
-  font-family:Sora;
-  src:url(https://lycees.test.recia.dev/commun/fonts/DM_Sans/static/Sora-Regular.ttf) format("truetype");
-  font-weight:400;
-  font-style:normal;
-  font-display:swap
-}
-@font-face {
-  font-family:Sora;
-  src:url(https://lycees.test.recia.dev/commun/fonts/DM_Sans/static/Sora-SemiBold.ttf) format("truetype");
-  font-weight:600;
-  font-style:normal;
-  font-display:swap
-}
-.container {
-  width:100%;
-  padding-right:16px;
-  padding-left:16px;
-  margin-right:auto;
-  margin-left:auto
-}
-@media screen and (width >= 576px) {
-  .container {
-    max-width:540px
-  }
-}
-@media screen and (width >= 768px) {
-  .container {
-    max-width:720px
-  }
-}
-@media screen and (width >= 992px) {
-  .container {
-    max-width:960px
-  }
-}
-@media screen and (width >= 1200px) {
-  .container {
-    max-width:1140px
-  }
-}
-@media screen and (width >= 1400px) {
-  .container {
-    max-width:1320px
-  }
-}
 html {
-  font-size:var(--recia-font-size-base)
+  height: 100%;
+  font-size: var(--recia-font-size-base)
 }
+
 body {
-  background-color:var(--recia-body-bg);
-  font-family:DM Sans,"sans-serif";
-  font-style:normal;
-  font-weight:400;
-  font-size:var(--recia-body-font-size);
-  letter-spacing:0;
-  color:var(--recia-body)
+  background-color: var(--recia-body-bg);
+  font-family: DM Sans,"sans-serif";
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--recia-body-font-size);
+  letter-spacing: 0;
+  color: var(--recia-body);
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - var(--recia-header-height, 68px));
+  margin: 0;
+  padding: 0;
+  margin-top: var(--recia-header-height, 68px);
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
 }
