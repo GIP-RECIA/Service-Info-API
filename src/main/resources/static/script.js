@@ -240,7 +240,7 @@ function saveJsonFile(is_draft) {
     })
     .then(response => {
         if (!response.ok) throw new Error("Erreur HTTP " + response.status);
-        if(is_draft){
+        if(!is_draft){
             alert("Fichier poussé en production avec succès !");
         } else {
             alert("Fichier sauvegardé en brouillon avec succès !");
