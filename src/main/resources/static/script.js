@@ -238,9 +238,17 @@ function saveJsonFile(is_draft) {
             draft: is_draft
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) throw new Error("Erreur HTTP " + response.status);
+        if(is_draft){
+            alert("Fichier poussé en production avec succès !");
+        } else {
+            alert("Fichier sauvegardé en brouillon avec succès !");
+        }
+    })
     .catch(error => {
         console.error('Erreur lors de l’envoi :', error);
+        alert("🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨\n\nErreur lors de l'envoi du fichier ! Sauvegardez le JSON à la main pour éviter de perdre vos modifications.");
     });
 }
 
