@@ -17,7 +17,11 @@ quill.on('text-change', majDroite);
 const fnameInput = document.getElementById('fname');
 fnameInput.addEventListener('change', async () => {
     stopUpdate=1;
-    appelerApiEtRemplir();
+    if(version_draft){
+        appelerApiEtRemplirDraft();
+    } else {
+        appelerApiEtRemplir();
+    }
     await new Promise(r => setTimeout(r, 100));
     stopUpdate=0;
     majDroite();
