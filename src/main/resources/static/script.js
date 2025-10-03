@@ -6,7 +6,10 @@ const quill = new Quill('#editor', {
             ['bold', 'italic', 'underline', 'link'],
             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             ['clean']
-        ]
+        ],
+        clipboard: {
+            matchVisual: false
+        }
     }
 });
 
@@ -128,7 +131,8 @@ function majGauche(data){
     responsable.value = data.responsable;
 
     // Description
-    quill.clipboard.dangerouslyPasteHTML(data.description);
+    const delta = quill.clipboard.convert(data.description);
+    quill.setContents(delta);
 
     // Tutoriels
     const container = document.getElementById('liens-container');
