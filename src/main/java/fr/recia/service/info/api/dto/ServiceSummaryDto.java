@@ -24,4 +24,5 @@ public class ServiceSummaryDto {
     private String fname;
     private String categoriePrincipale;
     private boolean doesInfoExist;
+    private boolean newService;
 }

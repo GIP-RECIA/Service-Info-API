@@ -21,6 +21,7 @@ import fr.recia.service.info.api.dto.ServiceInfoDto;
 import fr.recia.service.info.api.dto.ServiceSummaryDto;
 import fr.recia.service.info.api.repository.PortalRepository;
 import fr.recia.service.info.api.service.CategoryMappingLoaderService;
+import fr.recia.service.info.api.service.NewServiceLoaderService;
 import fr.recia.service.info.api.service.ServiceInfoAPIService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,9 @@ public class ServiceInfoAPIServiceImpl implements ServiceInfoAPIService {
     @Autowired
     private CategoryMappingLoaderService categoryMappingLoaderService;
 
+    @Autowired
+    private NewServiceLoaderService newServiceLoaderService;
+
     @Override
     @Cacheable(value="service-info", key = "#fname")
     public ServiceInfoDto getServiceInfo(final String fname) throws FileNotFoundException {
@@ -67,9 +71,9 @@ public class ServiceInfoAPIServiceImpl implements ServiceInfoAPIService {
         List<ServiceSummaryDto> serviceSummaryDtos = new ArrayList<>();
         for(String fname : allServices){
             if(allJsons.contains(fname)){
-                serviceSummaryDtos.add(new ServiceSummaryDto(fname, categoryMappingLoaderService.getValue(fname),true));
+                serviceSummaryDtos.add(new ServiceSummaryDto(fname, categoryMappingLoaderService.getValue(fname),true, newServiceLoaderService.isNew(fname)));
             } else {
-                serviceSummaryDtos.add(new ServiceSummaryDto(fname, categoryMappingLoaderService.getValue(fname), false));
+                serviceSummaryDtos.add(new ServiceSummaryDto(fname, categoryMappingLoaderService.getValue(fname), false, newServiceLoaderService.isNew(fname)));
             }
         }
         return serviceSummaryDtos;
