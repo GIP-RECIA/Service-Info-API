@@ -31,7 +31,7 @@ import java.util.Map;
 @Slf4j
 public class CategoryMappingLoaderService {
 
-    private Map<String, String> data;
+    private Map<String, Integer> data;
 
     @Autowired
     private AppConfProperties appConfProperties;
@@ -47,7 +47,7 @@ public class CategoryMappingLoaderService {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",", 2);
                 if (parts.length == 2) {
-                    data.put(parts[0].trim(), parts[1].trim());
+                    data.put(parts[0].trim(), Integer.valueOf(parts[1].trim()));
                 }
             }
             log.info("CSV service <-> catégorie chargé avec {} entrées", data.size());
@@ -56,7 +56,11 @@ public class CategoryMappingLoaderService {
         }
     }
 
-    public String getValue(String key) {
+    public int getValue(String key) {
+        if(!data.containsKey(key)){
+            log.warn("Key {} is unknown in categories mapping. Consider declaring it or ignoring it.", key);
+            return -1;
+        }
         return data.get(key);
     }
 

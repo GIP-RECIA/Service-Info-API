@@ -62,7 +62,7 @@ public class IJsonFileDaoImpl implements IJsonFileDao {
         }
         try {
             ServiceInfoDto serviceInfoDto = objectMapper.readValue(file, ServiceInfoDto.class);
-            serviceInfoDto.setCategorie_principale(categoryMappingLoaderService.getValue(fname));
+            serviceInfoDto.setCategorie_principale(String.valueOf(categoryMappingLoaderService.getValue(fname)));
             return serviceInfoDto;
         } catch (IOException e) {
             throw new RuntimeException(e);

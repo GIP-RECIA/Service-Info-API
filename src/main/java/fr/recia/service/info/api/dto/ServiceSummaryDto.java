@@ -22,7 +22,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ServiceSummaryDto {
     private String fname;
-    private String categoriePrincipale;
+    private int categoriePrincipale;
     private boolean doesInfoExist;
     private boolean newService;
 }
