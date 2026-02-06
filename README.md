@@ -16,7 +16,6 @@
 - Path : `/api/serviceInfo/{fname}`
 - Protégée : non
 
-
 **Récupération de la fiche info d'un service (en version brouillon) :**
 - Méthode : GET
 - Path : `/api/serviceInfoDraft/{fname}`
@@ -41,21 +40,22 @@
 
 **Affichage de l'UI de création :**
 - Méthode : GET
-- Path : `/api/create`
+- Path : `/create`
 - Protégée : oui
 
 ## Paramètres disponibles
 
 Les paramètres sont tous à déclarer sous le chemin `app.conf` :
 
-| Propriété | Description |
-|-----------|-------------|
-| jsonFolder | Chemin vers le dossier des fiches info en production |
-| draftJsonFolder | Chemin vers le dossier des fiches info en brouillon |
+| Propriété             | Description                                                  |
+|-----------------------|--------------------------------------------------------------|
+| jsonFolder            | Chemin vers le dossier des fiches info en production         |
+| draftJsonFolder       | Chemin vers le dossier des fiches info en brouillon          |
 | categoriesMappingFile | Chemin vers le fichier des catégories associées aux services |
-| casServiceId | ServiceID du client CAS |
-| casServerUrl | URL du serveur CAS |
-| casProviderKey | Identifiant unique du provider (interne à spring security) |
-| casTicketCallback | Endpoint où recevoir le retour du CAS |
-| allowedOrigins | Origines autorisées (CORS) |
-| excludedServices | Services à exclure de la liste de tous les services |
+| isNewFile             | Chemin vers le fichier de la liste des nouveaux services     |
+| casServiceId          | ServiceID du client CAS                                      |
+| casServerUrl          | URL du serveur CAS                                           |
+| casProviderKey        | Identifiant unique du provider (interne à spring security)   |
+| casTicketCallback     | Endpoint où recevoir le retour du CAS                        |
+| allowedOrigins        | Origines autorisées (CORS)                                   |
+| excludedServices      | Services à exclure de la liste de tous les services          |
