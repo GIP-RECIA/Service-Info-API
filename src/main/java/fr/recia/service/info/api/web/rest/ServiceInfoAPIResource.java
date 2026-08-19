@@ -22,6 +22,7 @@ import fr.recia.service.info.api.dto.ServiceInfoDto;
 import fr.recia.service.info.api.dto.ServiceSummaryDto;
 import fr.recia.service.info.api.service.ServiceInfoAPIService;
 import fr.recia.service.info.api.service.ServiceInfoCreateService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.util.List;
 

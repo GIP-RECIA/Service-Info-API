@@ -19,9 +19,9 @@ import fr.recia.service.info.api.config.bean.ApiEndpoints;
 import fr.recia.service.info.api.config.bean.AppConfProperties;
 import fr.recia.service.info.api.web.rest.HealthCheck;
 import lombok.extern.slf4j.Slf4j;
-import org.jasig.cas.client.session.SingleSignOutFilter;
-import org.jasig.cas.client.validation.Assertion;
-import org.jasig.cas.client.validation.Cas30ServiceTicketValidator;
+import org.apereo.cas.client.session.SingleSignOutFilter;
+import org.apereo.cas.client.validation.Assertion;
+import org.apereo.cas.client.validation.Cas30ServiceTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -134,18 +134,18 @@ public class SecurityConfiguration {
 				.exceptionHandling(e -> e.authenticationEntryPoint(casAuthenticationEntryPoint(serviceProperties())))
 				.authorizeHttpRequests(
 					authorizeHttpRequests -> authorizeHttpRequests
-					.antMatchers(HealthCheck.HEALTH_CHECK).permitAll()
-					.antMatchers("/api/"+ApiEndpoints.READ_SERVICE_INFO+"/*").permitAll()
-					.antMatchers("/api/"+ApiEndpoints.GET_ALL_SERVICES).permitAll()
-					.antMatchers("/*.js").permitAll()
-					.antMatchers("/*.css").permitAll()
+					.requestMatchers(HealthCheck.HEALTH_CHECK).permitAll()
+					.requestMatchers("/api/"+ApiEndpoints.READ_SERVICE_INFO+"/*").permitAll()
+					.requestMatchers("/api/"+ApiEndpoints.GET_ALL_SERVICES).permitAll()
+					.requestMatchers("/*.js").permitAll()
+					.requestMatchers("/*.css").permitAll()
 					// Les endpoint en authenticated sont protégés par le CAS
-					.antMatchers("/"+ApiEndpoints.CREATE_SERVICE_INFO).authenticated()
-					.antMatchers("/api/"+ApiEndpoints.GENERATE_JSON_FILE).authenticated()
-					.antMatchers("/api/"+ApiEndpoints.SAVE_JSON_FILE).authenticated()
-					.antMatchers("/api/"+ApiEndpoints.READ_SERVICE_INFO_DRAFT+"/*").authenticated()
+					.requestMatchers("/"+ApiEndpoints.CREATE_SERVICE_INFO).authenticated()
+					.requestMatchers("/api/"+ApiEndpoints.GENERATE_JSON_FILE).authenticated()
+					.requestMatchers("/api/"+ApiEndpoints.SAVE_JSON_FILE).authenticated()
+					.requestMatchers("/api/"+ApiEndpoints.READ_SERVICE_INFO_DRAFT+"/*").authenticated()
 					// Cet endpoint doit être accessible car c'est le callback du CAS vers l'appli spring pour faire valider le ticket
-					.antMatchers(appConfProperties.getCasTicketCallback()).permitAll()
+					.requestMatchers(appConfProperties.getCasTicketCallback()).permitAll()
 					.anyRequest().denyAll());
 		return http.build();
 	}
