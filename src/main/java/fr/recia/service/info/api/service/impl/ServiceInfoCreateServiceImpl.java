@@ -38,8 +38,7 @@ public class ServiceInfoCreateServiceImpl implements ServiceInfoCreateService {
     @Autowired
     private AppConfProperties appConfProperties;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private CacheEvictionService cacheEvictionService;

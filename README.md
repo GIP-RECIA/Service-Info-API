@@ -3,9 +3,9 @@
 **Description** : API REST restituant des informations sur les différents services ENT (description, tutoriels)
 
 **Versions** :
-- Java : 11
-- Spring boot : 2.7.18
-- Spring security : 5.7.11
+- Java : 25
+- Spring boot : 4.1.0
+- Spring security : 7.1.0
 
 **Démarrer en local** : `mvn clean package spring-boot:run`
 

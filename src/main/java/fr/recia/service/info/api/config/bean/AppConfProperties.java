@@ -15,13 +15,13 @@
  */
 package fr.recia.service.info.api.config.bean;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.PostConstruct;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @ConfigurationProperties(prefix = "app.conf")

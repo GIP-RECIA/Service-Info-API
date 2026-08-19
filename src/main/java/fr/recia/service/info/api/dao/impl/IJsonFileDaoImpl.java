@@ -50,8 +50,7 @@ public class IJsonFileDaoImpl implements IJsonFileDao {
     @Autowired
     private AppConfProperties appConfProperties;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public ServiceInfoDto findServiceInfoFromFname(String fname, String folder) throws FileNotFoundException {

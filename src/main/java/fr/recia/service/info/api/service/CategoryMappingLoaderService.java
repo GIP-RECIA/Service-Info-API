@@ -16,11 +16,11 @@
 package fr.recia.service.info.api.service;
 
 import fr.recia.service.info.api.config.bean.AppConfProperties;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
